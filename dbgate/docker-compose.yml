@@ -1,0 +1,23 @@
+services:
+  dbgate:
+    container_name: dbgate
+    image: dbgate/dbgate:${DBGATE_VERSION:-alpine}
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    environment:
+      - CONNECTIONS_ENCRYPTION_KEY=${DBGATE_ENCRYPTION_KEY:-SuperSecret123!}
+      - LOGIN=${DBGATE_LOGIN:-admin}
+      - PASSWORD=${DBGATE_PASSWORD:-admin}
+    volumes:
+      - ${DBGATE_VOLUME:-/opt/dbgate-data}:/root/.dbgate
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+    networks:
+      - shared
+
+networks:
+  shared:
+    external: true
