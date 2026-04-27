@@ -1,0 +1,31 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:${MYSQL_IMAGE:-8}
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - ${MYSQL_VOLUME_DATA}:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    shm_size: 128mb
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+    networks:
+      - shared
+
+networks:
+  shared:
+    external: true
