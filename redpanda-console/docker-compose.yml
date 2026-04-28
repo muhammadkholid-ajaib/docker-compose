@@ -1,0 +1,14 @@
+services:
+  console:
+    image: docker.redpanda.com/redpandadata/console:latest
+    container_name: redpanda-console
+    environment:
+      KAFKA_BROKERS: "kafka:29092"
+    ports:
+      - "8000:8080"
+    networks:
+      - shared
+
+networks:
+  shared:
+    external: true
