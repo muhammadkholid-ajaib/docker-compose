@@ -10,13 +10,16 @@ services:
       - LOGIN=${DBGATE_LOGIN:-admin}
       - PASSWORD=${DBGATE_PASSWORD:-admin}
     volumes:
-      - ${DBGATE_VOLUME:-/opt/dbgate-data}:/root/.dbgate
+      - dbgate_data:/root/.dbgate
     deploy:
       resources:
         limits:
           memory: 256m
     networks:
       - shared
+
+volumes:
+  dbgate_data:
 
 networks:
   shared:

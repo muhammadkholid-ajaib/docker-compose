@@ -6,7 +6,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - ${REDIS_VOLUME:-/opt/redis-data}:/data
+      - redis_data:/data
     # When using password, uncomment the following line
     # environment:
     #   - REDIS_PASSWORD=${REDIS_PASSWORD:-redis}
@@ -25,6 +25,9 @@ services:
           memory: 256m
     networks:
       - shared
+
+volumes:
+  redis_data:
 
 networks:
   shared:

@@ -15,7 +15,7 @@ services:
       retries: 5
       start_period: 10s
     volumes:
-      - ${MYSQL_VOLUME_DATA}:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
     shm_size: 128mb
@@ -25,6 +25,9 @@ services:
           memory: 1g
     networks:
       - shared
+
+volumes:
+  mysql_data:
 
 networks:
   shared:
